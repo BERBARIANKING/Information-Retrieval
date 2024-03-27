@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+
+    <!-- Search form -->
+    <form method="POST" action="/">
+        <label for="query">Search:</label>
+        <input type="text" id="query" name="query" placeholder="Enter movie or documentary name">
+        <label for="filter">Filter:</label>
+        <select id="filter" name="filter">
+            <option value="movies">Movies</option>
+            <option value="documentaries">Documentaries</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Display search results -->
+    {% if search_results %}
+        <h2>Search Results</h2>
+        <ul>
+            {% for result in search_results %}
+                <li>
+                    <a href="{{ url_for('movie_details', movie_id=result.movieID) }}">{{ result.title }}</a> - {{ result.type }}
+                    <!-- Display summary if available -->
+                    {% if result.summary %}
+                        <p>{{ result.summary }}</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- Pagination -->
+    {% if more_results_available %}
+        <form method="POST" action="/">
+            <input type="hidden" name="query" value="{{ query }}">
+            <input type="hidden" name="page" value="{{ page + 1 }}">
+            <button type="submit">Next Page</button>
+        </form>
+    {% endif %}
+
+    <!-- Subtitles -->
+    {% if subtitles %}
+        <h2>Subtitles</h2>
+        <ul>
+            {% for subtitle in subtitles %}
+                <li>{{ subtitle }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+</body>
+</html>
