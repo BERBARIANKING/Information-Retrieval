@@ -1,0 +1,8 @@
+Inverted Indexer (Based on the frequency of the words in the articles)
+Script for the web scraping and on top implement the inverted indexer 
+
+Usually the script downloads the data onto a file and then the indexer is used on top of the saved data
+
+Here are some links for the inverted index:
+https://www.geeksforgeeks.org/create-inverted-index-for-file-using-python/
+https://medium.com/@fro_g/writing-a-simple-inverted-index-in-python-3c8bcb52169a
