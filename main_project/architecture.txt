@@ -1,0 +1,27 @@
+-=-=-=-=-==-=--=-=-=-=-==-== First Exercise --=-==-=-=-=-=-=--=-=-=-=-=-=--= 
+
+Step 1:
+In the introduction mention the implementation of our project.
+
+Step 2:
+The bibliographic reference consists of the following:
+Take an implementation of a paper (like paper [1] for example). What doo we write about it?
+-This team has implemented this algorithm and has fixed a system for a service.
+
+Step 3:
+Fix the problems with the paper links at the end of the paper
+
+
+-=-=-=-=-==-=--=-=-=-=-==-== Second Exercise --=-==-=-=-=-=-=--=-=-=-=-=-=--= 
+
+First step: scrape the data from sources like imdb and natgeo
+Second step: enter a filtering process , which includes the ai summarizer , synonyms ,  word count and detections , and some extra cool and easy ai detections 
+Third step: apply the indexer. That is going to be the inverted index algoritmh. Don't forget that we have to fix the issue with the special characters next to the tagged word(,),\. etc.
+Fourth step: Pass all of the data to the front end , add some javascript statistics and charts and button filters.
+
+
+Extras:
+A good idea would be to download pdf's and recommend them to the user based on the searches that they have made.
+For example an autobiography of a person
+Or a movie , documentary based on one event
+That could be German technologies during the Second World War 
