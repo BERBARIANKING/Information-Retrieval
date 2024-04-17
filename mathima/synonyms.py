@@ -2,6 +2,8 @@
 #For example it can find synonyms for the word action etc.
 #So this can help woith the genres
 
+
+#if problem with library , imprort nltk
 from nltk.corpus import wordnet 
 
 def find_synonyms(word):
