@@ -1,0 +1,9 @@
+Application: flask
+
+Indexer: inverted index
+
+Web Scraper: Beautiful Soup
+
+Tokenizer: nltk and regex for special characters
+
+Synonyms: from nltk.corpus import wordnet 
