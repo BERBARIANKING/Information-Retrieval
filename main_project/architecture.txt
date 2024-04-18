@@ -18,6 +18,7 @@ First step: scrape the data from sources like imdb and natgeo
 Second step: enter a filtering process , which includes the ai summarizer , synonyms ,  word count and detections , and some extra cool and easy ai detections 
 Third step: apply the indexer. That is going to be the inverted index algoritmh. Don't forget that we have to fix the issue with the special characters next to the tagged word(,),\. etc.
 Fourth step: Pass all of the data to the front end , add some javascript statistics and charts and button filters.
+One filter can be the timestamp (date of the movie) , genre , director etc.
 
 
 Extras:
