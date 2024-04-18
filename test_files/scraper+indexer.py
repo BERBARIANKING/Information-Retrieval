@@ -1,5 +1,13 @@
 import requests 
 from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+import sumy
+import nltk
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.nlp.tokenizers import Tokenizer
+from sumy.summarizers.lsa import LsaSummarizer
+
+nltk.download('punkt')
 
 def download_text_from_url(url):
     response = requests.get(url)
@@ -47,5 +55,14 @@ if __name__ == "__main__":
         search_word = "Python"
         search_result = search_inverted_index(wikipedia_inverted_index, search_word)
         print(f"Occurrences of the word '{search_word}': {search_result}")
+
+        # Summarize the Wikipedia content
+        parser = PlaintextParser.from_string(wikipedia_text, Tokenizer("english"))
+        summarizer = LsaSummarizer()
+        summary = summarizer(parser.document, sentences_count=3)  # you can adjust the number of sentences in the summary
+        
+        print('Summary of Wikipedia Content:')
+        for sentence in summary:
+            print(sentence)
     else:
         print("Error occurred. Inverted index not created.")
