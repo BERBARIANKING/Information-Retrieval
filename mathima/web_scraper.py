@@ -45,10 +45,15 @@ def save_text_to_file(text, filename):
         print(f"Text saved to {filename}")
 
 if __name__ == "__main__":
-    # orismos ths url istoselidas wikipedia gia thn glossa python
-    url = "https://icsd.aegean.gr"
-    #katebasma keimenou apo url
-    text = download_text_from_url(url)
-    if text:
-        #apothkeush tou keimenou se arxeio
-        save_text_to_file(text, "python_icsd_text.txt")
+    #orismos ths arxikhs url istoselidas kai ths listas me ta links
+    initial_url = "https://en.wikipedia.org/wiki/Python_(programming_language)"
+    all_links= [initial_url]
+    #lhpsh tou keimenou apo thn istoselida
+    for link in all_links:
+        text = download_text_from_url(link)
+        if text:
+            save_text_to_file(text, f"{link.split('/')[-1]}.txt")
+            #lhpsh twn links apo thn istoselida kai prosyhkh sthn lista 
+            links = get_links_from_url(link)
+            if links:
+                all_links.extend(links)
