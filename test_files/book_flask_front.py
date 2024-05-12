@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template
 import requests
 from bs4 import BeautifulSoup
 import urllib3
@@ -9,7 +9,7 @@ app = Flask(__name__)
 urllib3.disable_warnings()
 
 @app.route('/', methods=['GET', 'POST'])
-def search_goodreads():
+def home():
     books = []
     if request.method == 'POST':
         book_name = request.form['book_name']
@@ -26,35 +26,8 @@ def search_goodreads():
                 title = book.find('a', class_='bookTitle').get_text(strip=True)
                 link = "https://www.goodreads.com" + book.find('a', class_='bookTitle')['href']
                 books.append({'title': title, 'link': link})
-    
-    html = '''
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Search Goodreads</title>
-    </head>
-    <body>
-        <h1>Book Search on Goodreads</h1>
-        <form action="/" method="post">
-            <input type="text" name="book_name" placeholder="Enter book name" required>
-            <button type="submit">Search</button>
-        </form>
-        {% if books %}
-            <h2>Search Results</h2>
-            <ul>
-            {% for book in books %}
-                <li><a href="{{ book.link }}">{{ book.title }}</a></li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            {% if request.method == 'POST' %}
-                <p>No results found.</p>
-            {% endif %}
-        {% endif %}
-    </body>
-    </html>
-    '''
-    return render_template_string(html, books=books)
+
+    return render_template('book.html', books=books)
 
 if __name__ == "__main__":
     app.run(debug=True)
