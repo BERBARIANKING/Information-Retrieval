@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template_string, url_for, redirect, session
+from flask import Flask, request, render_template_string, url_for, session
 from imdb import IMDb
 import re
 
@@ -18,10 +18,12 @@ def fetch_movies(title, start, end):
             plot = movie['plot'][0] if movie['plot'] else 'No description available.'
         else:
             plot = 'No description available.'
+        poster_url = movie.get('cover url', 'https://via.placeholder.com/150')  # Default placeholder if no cover url
         movies.append({
             'title': movie['title'],
             'description': plot,
-            'id': movie_id
+            'id': movie_id,
+            'poster_url': poster_url  # Store the poster URL
         })
     return movies, total_results
 
@@ -67,9 +69,16 @@ def home(page=1):
             <h2>Results for '{{ query }}':</h2>
             {% for movie in results %}
             <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">{{ movie['title'] }}</h5>
-                    <p class="card-text">{{ movie['description'] }}</p>
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ movie['poster_url'] }}" class="img-fluid rounded-start" alt="Poster for {{ movie['title'] }}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie['title'] }}</h5>
+                            <p class="card-text">{{ movie['description'] }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             {% endfor %}
