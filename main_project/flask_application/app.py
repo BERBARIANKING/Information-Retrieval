@@ -82,115 +82,56 @@ def home(page=1):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie & Book Search</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
-    <link href="{{ url_for('static', filename='assets/css/styles.css') }}" rel="stylesheet" />
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            overflow-x: hidden;
-        }
-        .bg-video {
-            position: fixed; /* Make video background fixed */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Place video behind the content */
-        }
-        .container {
-            position: relative;
-            z-index: 1; /* Ensure container is above background */
-            padding-top: 100px; /* Adjust padding to avoid overlapping with the masthead */
-        }
-        .results-container {
-            max-height: 600px;
-            overflow-y: auto;
-        }
-        .masthead, .social-icons {
-            z-index: 2; /* Higher z-index to ensure visibility and interaction */
-        }
-    </style>
 </head>
 <body>
-    <!-- Background Video -->
-    <video class="bg-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
-        <source src="static/assets/mp4/edu.mp4" type="video/mp4" />
-    </video>
-
-    <!-- Masthead -->
-    <div class="masthead">
-        <div class="masthead-content text-white">
-            <div class="container-fluid px-4 px-lg-0">
-                <a href="/">
-                    <img src="{{ url_for('static', filename='searchblack.png') }}" alt="Home Logo" class="mb-4">
-                </a>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Search Form and Results -->
     <div class="container mt-5">
-       <!-------<h1 class="mb-4 text-center">Movie & Book Search!</h1>----->
-        <form method="post" action="{{ url_for('home') }}" class="mb-4">
-            <div class="input-group">
+                               <a href="{{ url_for('home') }}">
+            <img src="{{ url_for('static', filename='logosearch.png') }}" alt="Home Logo" class="mb-4">
+        </a>
+
+
+        <h1 class="mb-4">Movie & Book Search!</h1>
+        <form method="post" action="{{ url_for('home') }}">
+            <div class="input-group mb-3">
                 <input type="text" name="query" class="form-control" placeholder="Search movies..." required value="{{ query }}">
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-primary">Search Movies</button>
             </div>
         </form>
-
-        <!-- Scrollable Results Container -->
-        <div class="results-container">
-            {% if results %}
-                <h2 class="text-center">Results for '{{ query }}':</h2>
-                {% for movie in results %}
-                <div class="card mb-3">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="{{ movie['poster_url'] }}" class="img-fluid rounded-start" alt="Poster for {{ movie['title'] }}">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ movie['title'] }}</h5>
-                                <p class="card-text"><strong>Summary:</strong> {{ movie['summary'] }}</p>
-                                <p class="card-text"><strong>Genres:</strong> {{ ', '.join(movie['genres']) }}</p>
-                                <p class="card-text"><strong>Main Characters:</strong> {{ ', '.join(movie['characters']) }}</p>
-                            </div>
+        <form method="post" action="{{ url_for('search_books') }}">
+            <div class="input-group mb-3">
+                <input type="text" name="book_name" class="form-control" placeholder="Search books..." required>
+                <button type="submit" class="btn btn-secondary">Search Books</button>
+            </div>
+        </form>
+        {% if results %}
+            <h2>Results for '{{ query }}':</h2>
+            {% for movie in results %}
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ movie['poster_url'] }}" class="img-fluid rounded-start" alt="Poster for {{ movie['title'] }}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie['title'] }}</h5>
+                            <p class="card-text">{{ movie['description'] }}</p>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-
-        <!-- Pagination -->
-        {% if results %}
-        <nav aria-label="Search results pages" class="mb-5">
-            <ul class="pagination justify-content-center">
-                {% if page > 1 %}
-                <li class="page-item"><a class="page-link" href="{{ url_for('home', page=page-1) }}">Previous</a></li>
-                {% endif %}
-                {% if page < total_pages %}
-                <li class="page-item"><a class="page-link" href="{{ url_for('home', page=page+1) }}">Next</a></li>
-                {% endif %}
-            </ul>
-        </nav>
+            </div>
+            {% endfor %}
+            <nav aria-label="Search results pages">
+                <ul class="pagination">
+                    {% if page > 1 %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('home', page=page-1) }}">Previous</a></li>
+                    {% endif %}
+                    {% if page < total_pages %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('home', page=page+1) }}">Next</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
         {% endif %}
     </div>
-
-    <!-- Social Icons Footer -->
-    <div class="social-icons">
-        <div class="d-flex flex-row flex-lg-column justify-content-center align-items-center h-100 mt-3 mt-lg-0">
-            <a class="btn btn-dark m-3" href="#!"><i class="fab fa-twitter"></i></a>
-            <a class="btn btn-dark m-3" href="#!"><i class="fab fa-facebook-f"></i></a>
-            <a class="btn btn-dark m-3" href="#!"><i the class="fab fa-instagram"></i></a>
-        </div>
-    </div>
-
-    <!-- Bootstrap and Theme Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="static/assets/js/scripts.js"></script>
-    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 </html>
 
