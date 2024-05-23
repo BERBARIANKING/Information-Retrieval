@@ -1,15 +1,3 @@
-from flask import Flask, request, render_template
-import requests
-from bs4 import BeautifulSoup
-import urllib3
-
-app = Flask(__name__)
-
-# Disable SSL verification warnings
-urllib3.disable_warnings()
-
-# In-memory search counter
-search_counter = {}
 
 from flask import Flask, request, render_template
 import requests
@@ -57,5 +45,3 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
