@@ -85,10 +85,9 @@ def home(page=1):
 </head>
 <body>
     <div class="container mt-5">
-                               <a href="{{ url_for('home') }}">
+        <a href="{{ url_for('home') }}">
             <img src="{{ url_for('static', filename='logosearch.png') }}" alt="Home Logo" class="mb-4">
         </a>
-
 
         <h1 class="mb-4">Movie & Book Search!</h1>
         <form method="post" action="{{ url_for('home') }}">
@@ -115,6 +114,8 @@ def home(page=1):
                         <div class="card-body">
                             <h5 class="card-title">{{ movie['title'] }}</h5>
                             <p class="card-text">{{ movie['description'] }}</p>
+                            <p class="card-text"><strong>Genres:</strong> {{ movie['genres'] | join(', ') }}</p>
+                            <p class="card-text"><strong>Main Characters:</strong> {{ movie['characters'] | join(', ') }}</p>
                         </div>
                     </div>
                 </div>
